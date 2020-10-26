@@ -1,0 +1,14 @@
+{
+  "name": "gitlab-webhook",
+  "version": "0.0.1",
+  "private": true,
+  "description": "",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "axios": "^0.20.0"
+  },
+  "devDependencies": {}
+}
