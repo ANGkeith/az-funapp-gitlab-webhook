@@ -64,6 +64,7 @@ const triggerPipeline = async (req, pipelineId, context) => {
 };
 
 const sendPendingStatus = async (req) => {
+    if (mrIsMerged(req)) return;
     await axios.request({
         method: 'POST',
         url: `${postBuildStatusEndpoint(req.body)}?state=pending&name=azureDevops`,
