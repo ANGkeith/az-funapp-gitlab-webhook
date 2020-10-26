@@ -20,12 +20,13 @@ const credential = (() => {
 })();
 
 const getSourceBranch = (req) => req.body.object_attributes.source_branch;
+const getTargetBranch = (req) => req.body.object_attributes.target_branch;
 
 const generateParameters = (req) => {
     const payload = req.body;
     return JSON.stringify({
-        SOURCE_BRANCH: payload.object_attributes.source_branch,
-        TARGET_BRANCH: payload.object_attributes.target_branch,
+        SOURCE_BRANCH: getSourceBranch(req),
+        TARGET_BRANCH: getTargetBranch(req),
         GITLAB_BUILD_STATUS_ENDPOINT: postBuildStatusEndpoint(payload),
         GITLAB_MR_STATE: payload.object_attributes.state,
         GITLAB_PAT: gitlabPAT,
@@ -39,7 +40,7 @@ const triggerPipeline = async (req, pipelineId, context) => {
             id: pipelineId,
         },
         reason: 'individualCI',
-        sourceBranch: getSourceBranch(req),
+        sourceBranch: mrIsMerged(req) ? getTargetBranch(req) : getSourceBranch(req),
         parameters: `${generateParameters(req)}`,
     };
 
@@ -71,6 +72,8 @@ const sendPendingStatus = async (req) => {
         },
     })
 }
+
+const mrIsMerged = (req) => req.body.object_attributes.state === 'merged'
 
 module.exports = {
     triggerPipeline,
