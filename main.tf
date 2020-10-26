@@ -72,12 +72,18 @@ resource "azurerm_function_app" "main" {
 
 resource "null_resource" "zip_deploy" {
   depends_on = [azurerm_function_app.main]
+
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+
   provisioner "local-exec" {
-    command = "./zip-deploy.sh"
+    command     = "./zip-deploy.sh"
     working_dir = "${path.module}/scripts"
     environment = {
-      RESOURCE_NAME = azurerm_resource_group.main.name
-      FUNCTIONAPP_NAME = azurerm_function_app.main.name
+      RESOURCE_NAME       = azurerm_resource_group.main.name
+      FUNCTIONAPP_NAME    = azurerm_function_app.main.name
       ARM_SUBSCRIPTION_ID = data.azurerm_client_config.current.subscription_id
     }
   }
