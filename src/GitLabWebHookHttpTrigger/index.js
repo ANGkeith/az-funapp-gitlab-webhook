@@ -14,6 +14,6 @@ module.exports = async function (context, req) {
     if (!validatePipelineId(context, pipelineId)) return;
     if (!validateMergeRequestState(context, req)) return;
 
-    await sendPendingStatus(req);
+    await sendPendingStatus(context, req);
     await triggerPipeline(req, pipelineId, context);
 };

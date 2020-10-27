@@ -63,7 +63,7 @@ const triggerPipeline = async (req, pipelineId, context) => {
         });
 };
 
-const sendPendingStatus = async (req) => {
+const sendPendingStatus = async (context, req) => {
     if (mrIsMerged(req)) return;
     await axios.request({
         method: 'POST',
@@ -71,6 +71,15 @@ const sendPendingStatus = async (req) => {
         headers: {
             "private-token": gitlabPAT,
         },
+    })
+    .catch((e) => {
+        context.log(e.response);
+        context.res = {
+            body: {
+                message: "Failed to send pending status",
+                error_message: e.response.data
+            }
+        };
     })
 }
 
