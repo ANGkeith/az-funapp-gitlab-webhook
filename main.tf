@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_storage_account" "main" {
-  name                     = replace("${local.prefix}-sa", "-", "")
+  name                     = replace("${local.prefix}-st", "-", "")
   depends_on               = [azurerm_resource_group.main]
   resource_group_name      = azurerm_resource_group.main.name
   location                 = azurerm_resource_group.main.location
@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "main" {
 }
 
 resource "azurerm_application_insights" "main" {
-  name                = "${local.prefix}-appinsights"
+  name                = "${local.prefix}-appi"
   depends_on          = [azurerm_resource_group.main]
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
@@ -24,7 +24,7 @@ resource "azurerm_application_insights" "main" {
 }
 
 resource "azurerm_app_service_plan" "main" {
-  name                = "${local.prefix}-asp"
+  name                = "${local.prefix}-plan"
   depends_on          = [azurerm_resource_group.main]
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
@@ -37,7 +37,7 @@ resource "azurerm_app_service_plan" "main" {
 }
 
 resource "azurerm_function_app" "main" {
-  name                       = "${local.prefix}-fun-app"
+  name                       = "${local.prefix}-func"
   depends_on                 = [azurerm_resource_group.main, azurerm_application_insights.main]
   resource_group_name        = azurerm_resource_group.main.name
   location                   = azurerm_resource_group.main.location
