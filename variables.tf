@@ -1,5 +1,13 @@
-variable "prefix" {}
-variable "location" {}
+variable "prefix" {
+  description = "The prefix for the resources created in the specified Azure Resource Group"
+  type        = string
+}
+
+variable "resource_group_name" {
+  description = "The resource group name to be imported"
+  type        = string
+}
+
 variable "AZURE_DEVOPS_USERNAME" {}
 variable "GITLAB_WEBHOOK_SHARED_SECRET" {}
 
