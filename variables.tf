@@ -27,5 +27,5 @@ variable "default_tags" {
 }
 
 locals {
-  prefix = "${var.prefix}-git-webhook"
+  prefix = "${var.prefix}-git"
 }
