@@ -46,6 +46,10 @@ resource "azurerm_function_app" "main" {
   tags                       = var.default_tags
   https_only                 = true
 
+  site_config {
+    ftps_state = "FtpsOnly"
+  }
+
   app_settings = {
     AppInsights_InstrumentationKey = azurerm_application_insights.main.instrumentation_key
     FUNCTIONS_WORKER_RUNTIME       = "node"
