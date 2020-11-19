@@ -22,6 +22,7 @@ const credential = (() => {
 const getSourceBranch = (req) => req.body.object_attributes.source_branch;
 const getTargetBranch = (req) => req.body.object_attributes.target_branch;
 
+// information to be forwarded to the AzureDevops Pipeline
 const generateParameters = (req) => {
     const payload = req.body;
     return JSON.stringify({
@@ -29,6 +30,7 @@ const generateParameters = (req) => {
         TARGET_BRANCH: getTargetBranch(req),
         GITLAB_BUILD_STATUS_ENDPOINT: postBuildStatusEndpoint(payload),
         GITLAB_MR_STATE: payload.object_attributes.state,
+        GITLAB_MR_ID: payload.object_attributes.iid,
         GITLAB_PAT: gitlabPAT,
         GITLAB_PREVIOUS_BUILD_SHA: payload.object_attributes.oldrev,
     });
