@@ -10,7 +10,7 @@ const postBuildStatusEndpoint = (payload) => {
     const baseUrl = getGitlabBaseUrl(payload);
     const projectId = payload.project.id;
     const buildStatusCommitSha = payload.object_attributes.last_commit.id;
-    return `${baseUrl}/api/${gitlabApiVersion}/projects/${projectId}/statuses/${buildStatusCommitSha}`;
+    return `${baseUrl}:4443/api/${gitlabApiVersion}/projects/${projectId}/statuses/${buildStatusCommitSha}`;
 };
 
 const triggerBuildEndpoint = `https://dev.azure.com/${organization}/${project}/_apis/build/builds?api-version=${azureDevopsApiVersion}`;
